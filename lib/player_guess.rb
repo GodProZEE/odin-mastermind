@@ -13,8 +13,6 @@ module PlayerGuess
   end
 
   def check_guess(computer_choice, guess_row, peg_area)
-
-    peg_area = [0, 0, 0, 0]
     if computer_choice == guess_row
       peg_area = ["Red", "Red", "Red", "Red"]
     else
