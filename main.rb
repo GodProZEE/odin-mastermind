@@ -23,10 +23,17 @@ def player_turn(board, colors, guess_row, peg_area)
   computer_choice = board.choose(colors)
   i = 0
   loop do
+    # This will ensure that during the next iteration, peg area won't have the previous blacks
+    peg_area = [nil, nil, nil, nil]
     guess_row = board.guess(guess_row, colors)
     peg_area = board.check_guess(computer_choice, guess_row, peg_area)
     i += 1
-    break if peg_area == ["Red", "Red", "Red", "Red"] or i >= 12
+    p peg_area
+    if peg_area == ["Red", "Red", "Red", "Red"] || i >= 12
+      puts "The computer choice was #{computer_choice}"
+      break 
+    end
+    
   end
 end
 
