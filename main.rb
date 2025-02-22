@@ -44,6 +44,7 @@ def play_game(board, turn, colors, guess_row, peg_area)
   end
 end
 
-play_game(board, turn, colors, guess_row, peg_area)
+# play_game(board, turn, colors, guess_row, peg_area)
     
-
+choice = board.player_choose(colors)
+p choice
