@@ -22,7 +22,13 @@ module PlayerGuess
         choice.each do |value|
           temp_choice.append(value)
         end
-      guess_row.each_with_index do |value, index|
+
+      temp_guess_row = []
+        guess_row.each do |value|
+          temp_guess_row << value
+        end
+
+      temp_guess_row.each_with_index do |value, index|
         
         if temp_choice.include?(value)
           if temp_choice[index] == guess_row[index]
@@ -33,13 +39,13 @@ module PlayerGuess
             # due to one color being chosen multiple times
             # if comp choice has just one instance of the color in question
 
-            if temp_choice.count(value) >= guess_row.count(value) && temp_choice.count(value).zero? == false
+            if temp_choice.count(value) >= temp_guess_row.count(value) && temp_choice.count(value).zero? == false
 
             peg_area[index] = "Black"
             end
             
           end
-          guess_row[guess_row.index(value)] = nil
+          temp_guess_row[temp_guess_row.index(value)] = nil
         else   
           peg_area[index] = nil
         end

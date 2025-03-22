@@ -17,6 +17,8 @@ class Board
       end
     end.delete_if {|value| value.to_s.include? '-1'}
     @colors = ["Red", "Blue", "Green", "Magenta", "Yellow", "Black"]
+
+    # This is the actual value, that every possible value gets compared with
     @guess_row = Array.new(4)
     @peg_area = Array.new(4)
   end
@@ -25,4 +27,12 @@ class Board
 
 end
 
-p Board.new.possible_guesses.count
+board = Board.new
+possible_guesses = board.possible_guesses
+peg_area = board.peg_area
+guess_row = ["Red", "Red", "Blue", "Green"]
+colors = board.colors
+# board.computer_guess(guess_row, possible_guesses, peg_area, colors)
+possible_guesses = [[0, 0, 1, 1], [1, 3, 2, 5], [1, 1, 1, 1], [3, 3, 4, 5], [3, 3, 3, 3], [1, 2, 3, 4]]
+board.get_score([0, 0, 1, 1], possible_guesses)
+
