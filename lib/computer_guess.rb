@@ -2,11 +2,11 @@ require_relative 'player_guess'
 
 module ComputerGuess
   include PlayerGuess
-  def computer_guess(player_choice, possible_guesses, peg_area, colors)
+  def computer_guess(player_choice, all_guesses, peg_area, colors)
     # This is to keep track of all the codes and keep only the unused codes to match in Knuth's algorithm
-    all_guesses = []
-    possible_guesses.each do |value|
-      all_guesses << value
+    possible_guesses = []
+    all_guesses.each do |value|
+      possible_guesses << value
     end
     impossible_codes = []
     i = 0
@@ -55,14 +55,19 @@ module ComputerGuess
       
     
   end
-    
+  
   def get_score(guess, possible_guesses)
+    # Keeping a tally for the REMAINING codes in the possible guesses
+    # for a given outcome. The highest value is the worst case for that guess.
     score_counter = Hash.new(0)
     possible_guesses.each do |value|
       response = check_guess(value, guess, [nil, nil, nil, nil])
+      # The count is for the NON eliminated codes, because codes with the same response means that they are the possible codes
+      # As such, they will not be the eliminated ones.
       score_counter[response] += 1
     end
 
+    # This gets the worst response to minimize the maximum later.
     max_remaining = get_max_from_hash(score_counter)
   end
 
@@ -71,8 +76,38 @@ module ComputerGuess
     hash.each_value { |value| max = value > max ? value : max }
     return max
   end
+
+  def max_for_each_guess(all_guesses, possible_guesses)
+    max_tally = Hash.new(0)
+    all_guesses.each do |code|
+      max_tally[code] = get_score(code, possible_guesses)
+    end
+    return max_tally
+  end
+
+  def get_min_max_values(max_tally)
+    min_value = get_min_from_hash(max_tally)
+    mini_max_codes = []
+    max_tally.each_pair do |key, value|
+      if value == min_value
+        mini_max_codes << key
+      end
+    end
+    return mini_max_codes
+  end
+
+  def get_min_from_hash(hash)
+    min = hash.values.first
+    hash.each_value { |value| min = value < min ? value : min }
+    return min
+  end
     
 
+  def minmax(all_guesses, possible_guesses)
+    max_tally = max_for_each_guess(all_guesses, possible_guesses)
+    min_max_array = get_min_max_values(max_tally)
+    p min_max_array
+  end
 end
 
 

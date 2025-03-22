@@ -8,10 +8,10 @@ class Board
   include PlayerGuess
   include PlayerChoose
   include ComputerGuess  
-  attr_accessor :colors, :guess_row, :peg_area, :possible_guesses
+  attr_accessor :colors, :guess_row, :peg_area, :all_guesses
 
   def initialize
-    @possible_guesses = (Set.new((1111..6666).each { |x| x })).to_a.delete_if {|value| value.to_s.include? '7' or value.to_s.include? '8' or value.to_s.include? '9'}.map! do |value|
+    @all_guesses = (Set.new((1111..6666).each { |x| x })).to_a.delete_if {|value| value.to_s.include? '7' or value.to_s.include? '8' or value.to_s.include? '9'}.map! do |value|
       value.digits.reverse.map! do |each_digit|
         each_digit - 1
       end
@@ -28,11 +28,11 @@ class Board
 end
 
 board = Board.new
-possible_guesses = board.possible_guesses
+all_guesses = board.all_guesses
 peg_area = board.peg_area
 guess_row = ["Red", "Red", "Blue", "Green"]
 colors = board.colors
 # board.computer_guess(guess_row, possible_guesses, peg_area, colors)
 possible_guesses = [[0, 0, 1, 1], [1, 3, 2, 5], [1, 1, 1, 1], [3, 3, 4, 5], [3, 3, 3, 3], [1, 2, 3, 4]]
-board.get_score([0, 0, 1, 1], possible_guesses)
+board.minmax(all_guesses, possible_guesses)
 
