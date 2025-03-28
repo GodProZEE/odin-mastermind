@@ -30,9 +30,7 @@ end
 board = Board.new
 all_guesses = board.all_guesses
 peg_area = board.peg_area
-guess_row = ["Red", "Red", "Blue", "Green"]
+guess_row = ["Yellow", "Black", "Magenta", "Green"]
 colors = board.colors
-# board.computer_guess(guess_row, possible_guesses, peg_area, colors)
-possible_guesses = [[0, 0, 1, 1], [1, 3, 2, 5], [1, 1, 1, 1], [3, 3, 4, 5], [3, 3, 3, 3], [1, 2, 3, 4]]
-board.minmax(all_guesses, possible_guesses)
+board.computer_guess(guess_row, all_guesses, peg_area, colors)
 
