@@ -1,9 +1,9 @@
 module ComputerChoose
   def choose(color_list)
     computer_choice = Array.new(4)
-    computer_choice.map! do |value|
+    computer_choice.map! do |_value|
       color_list[Random.new.rand(5)]
     end
-    return computer_choice
+    computer_choice
   end
 end
