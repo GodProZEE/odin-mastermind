@@ -1,4 +1,5 @@
 require_relative 'player_guess'
+require 'colorize'
 
 module ComputerGuess
   include PlayerGuess
@@ -9,15 +10,16 @@ module ComputerGuess
       possible_guesses << value
     end
     impossible_codes = []
-    i = 0
+    i = 1
     guess = 7
     color_of_current_guess = get_colors_from_numbers(possible_guesses[guess], colors)
+    puts("|       Computer's Guess                | Turn  |   Response")
+    puts('------------------------------------------------------------------')
     loop do
-      puts "Turn: #{i}"
-      puts "Guess: #{color_of_current_guess}"
       response = check_guess(color_of_current_guess, player_choice, [nil, nil, nil, nil])
+      comp_display(color_of_current_guess, i, response)
       if response == %w[Red Red Red Red]
-        p 'Won!'
+        puts "\n Umm so the computer actually kinda won ;-;"
         break
       else
         remove_from_array(possible_guesses, impossible_codes, response, colors, color_of_current_guess, peg_area)
@@ -28,7 +30,7 @@ module ComputerGuess
       end
 
       i += 1
-
+      sleep 1
       break if i >= 13
     end
   end
@@ -115,6 +117,32 @@ module ComputerGuess
     max_tally = max_for_each_guess(all_guesses, possible_guesses)
     min_max_array = get_min_max_values(max_tally)
     choose_value_from_min_max_array(min_max_array, possible_guesses)
+  end
+
+  def comp_display(guess, turn, response)
+    puts ''
+    print('| ')
+    guess.each do |value|
+      print value.colorize(value.downcase.to_sym)
+      (7 - value.length).times { print(' ') }
+      print(' | ')
+    end
+    print("  #{turn}   |      ")
+    response.each do |value|
+      print '▆'.colorize(value.downcase.to_sym)
+      print(' ')
+    end
+    puts ''
+  end
+
+  def display_choice(choice)
+    print("\n Your choice: ")
+    choice.each do |value|
+      print(value.colorize(value.downcase.to_sym))
+      print(' ')
+    end
+    puts ''
+    puts ''
   end
 
   def choose_value_from_min_max_array(array, possible_guesses)

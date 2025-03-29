@@ -1,5 +1,8 @@
 require_relative 'lib/board'
 require 'bundler/setup'
+require 'colorize'
+
+# (%w[Blue Red Green].each { |value| puts value.colorize(value.downcase.to_sym) })
 
 board = Board.new
 colors = board.colors
@@ -39,7 +42,7 @@ end
 
 def computer_turn(board, colors, _guess_row, peg_area, all_guesses)
   player_choice = board.player_choose(colors)
-  puts "Your choice is: #{player_choice}"
+  board.display_choice(player_choice)
   board.computer_guess(player_choice, all_guesses, peg_area, colors)
 end
 
