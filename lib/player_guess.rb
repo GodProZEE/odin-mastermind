@@ -53,7 +53,9 @@ module PlayerGuess
         
       end
     end
-    return peg_area
+    return peg_area.compact.sort
+      
+
   end
 
   

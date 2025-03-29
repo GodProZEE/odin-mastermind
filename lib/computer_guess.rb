@@ -13,23 +13,23 @@ module ComputerGuess
     guess = 7
     color_of_current_guess = get_colors_from_numbers(possible_guesses[guess], colors)
     loop do
-      
+      puts "Turn: #{i}"
+      puts "Guess: #{color_of_current_guess}"
       response = check_guess(color_of_current_guess, player_choice, [nil, nil, nil, nil])
       if response == ["Red", "Red", "Red", "Red"]
-        p color_of_current_guess
-        p i
+        p "Won!"
         break
       else
         remove_from_array(possible_guesses, impossible_codes, response, colors, color_of_current_guess, peg_area)
         all_guesses.delete_at(guess)
         next_guess = minmax(all_guesses, possible_guesses)
         guess = all_guesses.index(next_guess)
-        p next_guess
         color_of_current_guess = get_colors_from_numbers(next_guess, colors)
       end
+      
       i += 1
-      p i
-      break if i >= 12
+      
+      break if i >= 13
     end
   end
 

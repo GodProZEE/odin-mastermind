@@ -27,10 +27,5 @@ class Board
 
 end
 
-board = Board.new
-all_guesses = board.all_guesses
-peg_area = board.peg_area
-guess_row = ["Yellow", "Black", "Magenta", "Green"]
-colors = board.colors
-board.computer_guess(guess_row, all_guesses, peg_area, colors)
+
 
