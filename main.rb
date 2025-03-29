@@ -15,33 +15,18 @@ def ask_player
   if turn != 'guess' && turn != 'choose'
     puts 'Oopsies! You might have misspelled something there. Please enter it again'
     ask_player
+  else
+    turn
   end
-  turn
 end
 
 def player_turn(board, colors, guess_row, peg_area)
   computer_choice = board.choose(colors)
-  i = 0
-  loop do
-    # This will ensure that during the next iteration, peg area won't have the previous blacks
-    peg_area = [nil, nil, nil, nil]
-    guess_row = board.guess(guess_row, colors)
-    peg_area = board.check_guess(computer_choice, guess_row, peg_area)
-    i += 1
-    p peg_area
-    if peg_area == %w[Red Red Red Red]
-      puts "You've won!! The computer choice was #{computer_choice}"
-      break
-    elsif i >= 12
-      puts "The computer choice was actually #{computer_choice}. Sowwy buddy, you've kinda failed..."
-      break
-
-    end
-  end
+  board.player_guess(board, colors, guess_row, peg_area, computer_choice)
 end
 
 def computer_turn(board, colors, _guess_row, peg_area, all_guesses)
-  player_choice = board.player_choose(colors)
+  player_choice = board.player_choose(colors, board)
   board.display_choice(player_choice)
   board.computer_guess(player_choice, all_guesses, peg_area, colors)
 end

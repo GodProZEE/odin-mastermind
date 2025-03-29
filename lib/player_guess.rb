@@ -1,15 +1,11 @@
 module PlayerGuess
   def guess(guess_row, color_list)
-    puts 'Please enter a color from: '
-    color_list.each_with_index do |value, index|
-      puts("#{index}: #{value}")
-    end
+    choice = []
 
-    (0..3).each do |i|
-      guess_row[i] = color_list[gets.chomp.to_i]
+    gets.chomp.split('').map { |value| value.to_i }.each do |index|
+      choice << color_list[index]
     end
-
-    guess_row
+    choice
   end
 
   def check_guess(choice, guess_row, peg_area)
@@ -46,5 +42,46 @@ module PlayerGuess
       end
     end
     peg_area.compact.sort
+  end
+
+  def player_guess(board, colors, guess_row, peg_area, computer_choice)
+    i = 1
+    display_options(colors)
+    loop do
+      # This will ensure that during the next iteration, peg area won't have the previous blacks
+      peg_area = [nil, nil, nil, nil]
+      sleep 2 if i != 1
+      puts "Turn: #{i}"
+      puts 'Your choice: '
+      guess_row = board.guess(guess_row, colors)
+      peg_area = board.check_guess(computer_choice, guess_row, peg_area)
+      player_disp(guess_row, peg_area)
+      i += 1
+
+      if peg_area == %w[Red Red Red Red]
+        puts "You've won!!"
+        display_choice(computer_choice)
+        break
+      elsif i >= 13
+        puts "Sowwy buddy, you've kinda failed..."
+        display_choice(computer_choice)
+        break
+      end
+    end
+  end
+
+  def player_disp(guess, response)
+    print('Your guess                           Response')
+    puts ''
+    guess.each do |value|
+      print value.colorize(value.downcase.to_sym)
+      print(' | ')
+    end
+    response.each do |value|
+      print '▆'.colorize(value.downcase.to_sym)
+      print(' ')
+    end
+    puts ''
+    puts ''
   end
 end

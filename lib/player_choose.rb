@@ -1,15 +1,12 @@
 module PlayerChoose
-  def player_choose(color_list)
-    player_choice = Array.new(4)
-    puts 'Please choose your colors for the computer to guess:'
-    color_list.each_with_index do |value, index|
-      puts "#{index}: #{value}"
-    end
+  def player_choose(color_list, board)
+    board.display_options(color_list)
 
-    player_choice.map! do |_value|
-      color_list[gets.chomp.to_i]
-    end
+    choice = []
 
-    player_choice
+    gets.chomp.split('').map { |value| value.to_i }.each do |index|
+      choice << color_list[index]
+    end
+    choice
   end
 end

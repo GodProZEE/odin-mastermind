@@ -30,7 +30,7 @@ module ComputerGuess
       end
 
       i += 1
-      sleep 1
+      sleep 1 if i != 1
       break if i >= 13
     end
   end
@@ -132,16 +132,6 @@ module ComputerGuess
       print '▆'.colorize(value.downcase.to_sym)
       print(' ')
     end
-    puts ''
-  end
-
-  def display_choice(choice)
-    print("\n Your choice: ")
-    choice.each do |value|
-      print(value.colorize(value.downcase.to_sym))
-      print(' ')
-    end
-    puts ''
     puts ''
   end
 

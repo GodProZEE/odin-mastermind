@@ -23,4 +23,23 @@ class Board
     @guess_row = Array.new(4)
     @peg_area = Array.new(4)
   end
+
+  def display_choice(choice)
+    print("\nSecret Code: ")
+    choice.each do |value|
+      print(value.colorize(value.downcase.to_sym))
+      print(' ')
+    end
+    puts ''
+    puts ''
+  end
+
+  def display_options(color_list)
+    puts 'Please enter 4 colors in the format XXXX from: '
+    color_list.each_with_index do |value, index|
+      print("#{index}: #{value}".colorize(value.downcase.to_sym))
+      print(' | ')
+    end
+    puts ''
+  end
 end
